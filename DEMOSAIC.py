@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
-
+import os
 #-------------image names 
 # name of images you want to load
 format1=".bmp"
 format2=".jpg"
-mosaic="pencils_mosaic"
-org="pencils"
+mosaic="Resources/crayons_mosaic"
+org="Resources/crayons"
 
 
 
@@ -57,7 +57,7 @@ r1 = cv2.filter2D(r,-1, kr) #Blue After Filter 2D
 
 img = cv2.merge((b1,g1,r1)) #merge b g r
 img=np.uint8(img) # convert float32 to uint8
-cv2.imwrite(mosaic+"2"+format1,img) 
+cv2.imwrite(org+"_DeMosiac"+format1,img) 
 cv2.imshow("DUPLICATE IMAGE",img)
 
 
@@ -78,6 +78,7 @@ ro=r2/255
 bd=b1/255
 gd=g1/255
 rd=r1/255
+
 bnew=((bo-bd)**2)**.5
 gnew=((go-gd)**2)**.5
 rnew=((ro-rd)**2)**.5
@@ -87,7 +88,7 @@ rnew=((ro-rd)**2)**.5
 new=cv2.merge((bnew*255,gnew*255,rnew*255))
 new=np.uint8(new)
 cv2.imshow("MINUS",new)
-cv2.imwrite(mosaic+"Minus"+format1,new)
+cv2.imwrite(org+"_OrignalMinusDeMosiac"+format1,new)
 
 #---------------------PART 2-------------------------------------
 n1=gd-rd
@@ -104,7 +105,7 @@ n3=rd*255
 img2 = cv2.merge((n2,n1,n3)) #merge channels
 img2=np.uint8(img2) #convert to 0-255
 cv2.imshow("METHOD",img2)
-cv2.imwrite(mosaic+"3"+format1,img2)
+cv2.imwrite(org+"_BillFreeMan"+format1,img2)
 
 image=np.uint8(image)
 cv2.imshow("MOSIAC",image)
@@ -117,14 +118,12 @@ new=cv2.merge((b3*255,g3*255,r3*255))
 new=np.uint8(new)
 
 cv2.imshow("MINUS2",new)
-cv2.imwrite(mosaic+"Minus2"+format1,new)
+cv2.imwrite(org+"_OrignalMinusBillFreeMan"+format1,new)
 
 
 
 cv2.moveWindow("MOSIAC", 0, 513)
-
 cv2.imshow("ORIGNAL",np.uint8(imageorg))
-
 cv2.moveWindow("ORIGNAL", 0, 0) 
 cv2.moveWindow("DUPLICATE IMAGE", 610, 0)
 cv2.moveWindow("MINUS", 610, 513)
